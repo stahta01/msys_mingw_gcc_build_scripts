@@ -1,0 +1,2 @@
+Add text logging during build
+Add download tar files
