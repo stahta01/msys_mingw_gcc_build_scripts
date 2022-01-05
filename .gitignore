@@ -47,3 +47,9 @@
 /mpfr-3.1.4
 /w32api-5.3.4
 /zlib-1.2.11
+
+# download folders
+/downloaded-files
+
+# installation folder
+/local
