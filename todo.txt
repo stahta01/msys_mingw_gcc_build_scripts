@@ -1,7 +1,4 @@
 Add text logging during build, install, and check
-Add download tar source files
-Add download tar dev files
-Add download tar binary files
 Build ISL 0.21
 Build GCC version 9.4
 Build Binutils 2.33.1
