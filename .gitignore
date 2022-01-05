@@ -35,7 +35,7 @@
 *.log
 
 # Build folders
-/gcc-build
+/*-build
 
 # source mudules folders
 /binutils-2.32
