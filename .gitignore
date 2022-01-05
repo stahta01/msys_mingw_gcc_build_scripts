@@ -33,3 +33,17 @@
 
 # Build Log files
 *.log
+
+# Build folders
+/gcc-build
+
+# source mudules folders
+/binutils-2.32
+/gcc-9.2.0
+/gmp-6.1.0
+/libiconv-1.16
+/mingwrt-5.4.2
+/mpc-1.0.3
+/mpfr-3.1.4
+/w32api-5.3.4
+/zlib-1.2.11
