@@ -27,9 +27,9 @@ else
 fi
 _binutils_folder="binutils-2.32"
 
-date --rfc-3339=seconds > binutils-prepare.log && \
-cd ${_binutils_folder} && _patch_binutils | tee ../binutils-prepare.log && cd .. && \
-date --rfc-3339=seconds >> ../binutils-prepare.log
+cd ${_binutils_folder} && date --rfc-3339=seconds > ../binutils-prepare.log && \
+_patch_binutils | tee ../binutils-prepare.log && \
+date --rfc-3339=seconds >> ../binutils-prepare.log && cd .. && \
 mkdir -p binutils-build && cd binutils-build && \
 date --rfc-3339=seconds > ../binutils-build.log && \
 ../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
