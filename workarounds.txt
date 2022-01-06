@@ -1,0 +1,2 @@
+Manual copy of header features.h to include folder
+Manual copy of libintl-8.dll to bin folder
