@@ -52,7 +52,6 @@ _patch_gcc && \
 mkdir -p gcc-build && cd gcc-build && \
 date --rfc-3339=seconds > ../gcc-build.log && \
 ../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
-  --with-build-sysroot="$INSTALL_PATH" \
   --with-build-time-tools="$INSTALL_PATH/bin" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
   --with-gmp="$INSTALL_PATH" --with-mpfr="$INSTALL_PATH" --with-mpc="$INSTALL_PATH" \
@@ -65,3 +64,6 @@ make 2>&1 | tee ../gcc-build.log && \
 date --rfc-3339=seconds >> ../gcc-build.log && \
 make install && \
 make check -k
+
+
+# --with-build-sysroot="$INSTALL_PATH"
