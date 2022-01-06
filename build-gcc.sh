@@ -63,11 +63,11 @@ date --rfc-3339=seconds > ../gcc-build.log && \
   --with-build-time-tools="$INSTALL_PATH/bin" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
   --with-gmp="$INSTALL_PATH" --with-mpfr="$INSTALL_PATH" --with-mpc="$INSTALL_PATH" \
+  --with-dwarf2 --disable-sjlj-exceptions \
+  --enable-languages=c,c++,ada \
   --enable-static --enable-shared \
   --disable-libvtv --disable-win32-registry \
-  --with-dwarf2 --disable-sjlj-exceptions \
-  --enable-languages=c,c++ \
-  --enable-nls --disable-werror --disable-build-format-warnings 2>&1 | tee ../gcc-build.log && \
+  --disable-nls --disable-werror --disable-build-format-warnings 2>&1 | tee ../gcc-build.log && \
 make 2>&1 | tee ../gcc-build.log && \
 date --rfc-3339=seconds >> ../gcc-build.log && \
 make install && \
