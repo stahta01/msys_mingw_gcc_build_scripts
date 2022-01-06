@@ -1,8 +1,16 @@
 _apply_patch_with_msg() {
   for _patch in "$@"
   do
-    echo "Applying ${_patch}"
-    patch --directory=${_gcc_folder} -Nbp1 -i "../patches/gcc/${_patch}"
+    if [ ! -f "../patches/gcc/${_patch}" ]; then
+      echo "Skipping ${_patch} because it is missing" 2>&1
+    elif patch --dry-run -Rbp1 -i "../patches/gcc/${_patch}" > /dev/null 2>&1 ; then
+      echo "Skipping ${_patch} because it likely was already applied" 2>&1
+    elif patch --dry-run -Nbp1 -i "../patches/gcc/${_patch}" > /dev/null 2>&1 ; then
+      echo "Applying ${_patch}"
+      patch -Nbp1 -i "../patches/gcc/${_patch}" 2>&1
+    else
+      echo "Skipping ${_patch} because it likely will fail" 2>&1
+    fi
   done
 }
 
@@ -34,8 +42,6 @@ _patch_gcc() {
     27-libgccjit-invalid-assertion.patch \
     28-fancy-abort-diagnostic.patch \
     29-libgccjit-file-mode.patch
-
-  sed -i 's/${prefix}\/mingw\//${prefix}\//g' ${_gcc_folder}/configure
 }
 
 if [[ $# -ne 0 ]]; then
@@ -48,7 +54,9 @@ _gcc_folder="gcc-9.2.0"
 [[ -d gcc-build ]] && rm -rf gcc-build
 
 pwd && \
-_patch_gcc && \
+date --rfc-3339=seconds > gcc-prepare.log && \
+cd ${_gcc_folder} && _patch_gcc | tee ../gcc-prepare.log && cd .. && \
+date --rfc-3339=seconds >> ../gcc-prepare.log
 mkdir -p gcc-build && cd gcc-build && \
 date --rfc-3339=seconds > ../gcc-build.log && \
 ../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
