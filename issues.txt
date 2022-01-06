@@ -1,4 +1,2 @@
-Ada does not build
 GetText requires tools newer than MSys/Mingw.org contains to build
-libgcc build fails likely problem in binutils or CRT
-  fatal error: stdio.h: No such file or directory
+Ada does not build; need to retry since I have found the mingw.org GCC Ada patch files
