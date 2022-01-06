@@ -51,5 +51,8 @@
 # download folders
 /downloaded-files
 
-# installation folder
+# default installation folder
 /local
+
+# patches and other fixes to software projects
+/patches
