@@ -63,6 +63,7 @@ date --rfc-3339=seconds >> ../gcc-prepare.log && cd .. && \
 mkdir -p gcc-build && cd gcc-build && \
 date --rfc-3339=seconds > ../gcc-build.log && \
 ../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
+  --libexecdir=${INSTALL_PATH}/lib \
   --with-build-time-tools="$INSTALL_PATH/bin" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
   --with-gmp="$INSTALL_PATH" --with-mpfr="$INSTALL_PATH" --with-mpc="$INSTALL_PATH" \
