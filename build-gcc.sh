@@ -47,7 +47,7 @@ _patch_gcc() {
 if [[ $# -ne 0 ]]; then
   INSTALL_PATH="$1"
 else
-  INSTALL_PATH="`pwd`/local"
+  INSTALL_PATH='/usr/local'
 fi
 _gcc_folder="gcc-9.2.0"
 
