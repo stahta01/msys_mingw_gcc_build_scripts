@@ -54,9 +54,9 @@ _gcc_folder="gcc-9.2.0"
 [[ -d gcc-build ]] && rm -rf gcc-build
 
 pwd && \
-date --rfc-3339=seconds > gcc-prepare.log && \
-cd ${_gcc_folder} && _patch_gcc | tee ../gcc-prepare.log && cd .. && \
-date --rfc-3339=seconds >> ../gcc-prepare.log
+cd ${_gcc_folder} && date --rfc-3339=seconds > ../gcc-prepare.log && \
+_patch_gcc | tee ../gcc-prepare.log && \
+date --rfc-3339=seconds >> ../gcc-prepare.log && cd .. && \
 mkdir -p gcc-build && cd gcc-build && \
 date --rfc-3339=seconds > ../gcc-build.log && \
 ../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
@@ -66,6 +66,7 @@ date --rfc-3339=seconds > ../gcc-build.log && \
   --with-dwarf2 --disable-sjlj-exceptions \
   --enable-languages=c,c++,ada \
   --enable-static --enable-shared \
+  --enable-version-specific-runtime-libs \
   --disable-libvtv --disable-win32-registry \
   --disable-nls --disable-werror --disable-build-format-warnings 2>&1 | tee ../gcc-build.log && \
 make 2>&1 | tee ../gcc-build.log && \
