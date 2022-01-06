@@ -23,7 +23,7 @@ _patch_binutils() {
 if [[ $# -ne 0 ]]; then
   INSTALL_PATH="$1"
 else
-  INSTALL_PATH="`pwd`/local"
+  INSTALL_PATH='/usr/local'
 fi
 _binutils_folder="binutils-2.32"
 
