@@ -27,6 +27,8 @@ else
 fi
 _binutils_folder="binutils-2.32"
 
+[[ -d binutils-build ]] && rm -rf binutils-build
+
 cd ${_binutils_folder} && date --rfc-3339=seconds > ../binutils-prepare.log && \
 _patch_binutils | tee ../binutils-prepare.log && \
 date --rfc-3339=seconds >> ../binutils-prepare.log && cd .. && \
@@ -35,6 +37,10 @@ date --rfc-3339=seconds > ../binutils-build.log && \
 ../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
   --with-build-sysroot="$INSTALL_PATH" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
+  --disable-rpath --enable-lto --enable-gold \
+  --enable-libssp --enable-install-libbfd \
+  --enable-shared --enable-static \
+  --enable-install-libiberty \
   --enable-nls --disable-werror 2>&1 | tee ../binutils-build.log && \
 make 2>&1 | tee ../binutils-build.log && \
 date --rfc-3339=seconds >> ../binutils-build.log && \
