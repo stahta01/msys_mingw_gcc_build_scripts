@@ -51,6 +51,9 @@ else
 fi
 _gcc_folder="gcc-9.2.0"
 
+echo "INSTALL_PATH := $INSTALL_PATH"
+echo "_gcc_folder := ${_gcc_folder}"
+
 [[ -d gcc-build ]] && rm -rf gcc-build
 
 pwd && \
