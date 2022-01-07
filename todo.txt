@@ -3,4 +3,3 @@ Build ISL 0.21
 Build GCC version 9.4
 Build Binutils 2.33.1
 Build Binutils 2.36.1
-Add build-all.sh that sets INSTALL_PATH used by other scripts
