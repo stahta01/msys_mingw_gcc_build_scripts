@@ -56,13 +56,13 @@ echo "_gcc_folder := ${_gcc_folder}"
 
 [[ -d gcc-build ]] && rm -rf gcc-build
 
-pwd && \
 cd ${_gcc_folder} && date --rfc-3339=seconds > ../gcc-prepare.log && \
 _patch_gcc | tee ../gcc-prepare.log && \
 date --rfc-3339=seconds >> ../gcc-prepare.log && cd .. && \
 mkdir -p gcc-build && cd gcc-build && \
 date --rfc-3339=seconds > ../gcc-build.log && \
 ../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
+  --with-stage1-ldflags="-L$INSTALL_PATH/lib/" \
   --libexecdir=${INSTALL_PATH}/lib \
   --with-build-time-tools="$INSTALL_PATH/bin" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
