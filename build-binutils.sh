@@ -30,7 +30,8 @@ _prepare_binutils() {
 
 _build_binutils() {
   date --rfc-3339=seconds && \
-  ../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
+  ../${_binutils_folder}/configure --target=i686-pc-mingw32 \
+    --prefix="$INSTALL_PATH" \
     --with-build-sysroot="$INSTALL_PATH" \
     --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
     --disable-rpath \
