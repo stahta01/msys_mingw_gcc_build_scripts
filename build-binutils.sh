@@ -20,34 +20,44 @@ _patch_binutils() {
     02-enotsup-fall-back.patch
 }
 
+_prepare_binutils() {
+  cd ${_binutils_folder} && \
+  date --rfc-3339=seconds && \
+  _patch_binutils && \
+  date --rfc-3339=seconds && \
+  cd ..
+}
+
+_build_binutils() {
+  date --rfc-3339=seconds && \
+  ../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
+    --with-build-sysroot="$INSTALL_PATH" \
+    --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
+    --disable-rpath \
+    --enable-install-libbfd \
+    --disable-shared --enable-static \
+    --enable-install-libiberty \
+    --disable-nls --disable-werror && \
+  make && \
+  date --rfc-3339=seconds
+}
+
 if [[ $# -ne 0 ]]; then
   INSTALL_PATH="$1"
   echo "INSTALL_PATH := $INSTALL_PATH"
 else
   INSTALL_PATH='/usr/local'
 fi
-_binutils_folder="binutils-2.32"
+_binutils_folder="binutils-2.31.1"
 
 [[ -d binutils-build ]] && rm -rf binutils-build
 
-cd ${_binutils_folder} && date --rfc-3339=seconds > ../binutils-prepare.log && \
-_patch_binutils | tee ../binutils-prepare.log && \
-date --rfc-3339=seconds >> ../binutils-prepare.log && cd .. && \
+_prepare_binutils 2>&1 | tee binutils-prepare.log && \
 mkdir -p binutils-build && cd binutils-build && \
-date --rfc-3339=seconds > ../binutils-build.log && \
-../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
-  --with-build-sysroot="$INSTALL_PATH" \
-  --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
-  --disable-rpath \
-  --enable-install-libbfd \
-  --enable-shared --enable-static \
-  --enable-install-libiberty \
-  --enable-nls --disable-werror 2>&1 | tee ../binutils-build.log && \
-make 2>&1 | tee ../binutils-build.log && \
-date --rfc-3339=seconds >> ../binutils-build.log && \
+_build_binutils 2>&1 | tee ../binutils-build.log && \
 make install && \
 date --rfc-3339=seconds > ../binutils-check.log && \
-make check -k 2>&1 | tee ../binutils-check.log && \
+make LDFLAGS="" check -k 2>&1 | tee ../binutils-check.log || true && \
 date --rfc-3339=seconds >> ../binutils-check.log
 
 # --enable-lto --enable-gold
