@@ -1,2 +1,1 @@
 GetText requires tools newer than MSys/Mingw.org contains to build
-Ada does not build; need to retry since I have found the mingw.org GCC Ada patch files
