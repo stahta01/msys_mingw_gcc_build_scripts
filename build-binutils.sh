@@ -22,6 +22,7 @@ _patch_binutils() {
 
 if [[ $# -ne 0 ]]; then
   INSTALL_PATH="$1"
+  echo "INSTALL_PATH := $INSTALL_PATH"
 else
   INSTALL_PATH='/usr/local'
 fi
