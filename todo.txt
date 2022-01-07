@@ -1,5 +1,2 @@
-Add text logging during build, install, and check
-Build ISL 0.21
+Add text logging during build, prepare, and check
 Build GCC version 9.4
-Build Binutils 2.33.1
-Build Binutils 2.36.1
