@@ -48,7 +48,7 @@ if [[ $# -ne 0 ]]; then
 else
   INSTALL_PATH='/usr/local'
 fi
-_binutils_folder="binutils-2.31.1"
+_binutils_folder="binutils-2.36.1"
 
 [[ -d binutils-build ]] && rm -rf binutils-build
 
