@@ -44,6 +44,28 @@ _patch_gcc() {
     29-libgccjit-file-mode.patch
 }
 
+_prepare_gcc() {
+  cd ${_gcc_folder} && \
+  date --rfc-3339=seconds && \
+  _patch_gcc && \
+  date --rfc-3339=seconds && \
+  cd ..
+}
+
+_build_gcc() {
+  date --rfc-3339=seconds && \
+  ../${_gcc_folder}/configure --build=i686-pc-mingw32 \
+    --prefix="$INSTALL_PATH" \
+    --with-dwarf2 --disable-sjlj-exceptions \
+    --enable-languages=c,c++ \
+    --enable-static --enable-shared \
+    --enable-version-specific-runtime-libs \
+    --disable-libvtv --disable-win32-registry \
+    --disable-nls --disable-werror --disable-build-format-warnings && \
+  make && \
+  date --rfc-3339=seconds
+}
+
 if [[ $# -ne 0 ]]; then
   INSTALL_PATH="$1"
 else
@@ -56,27 +78,21 @@ echo "_gcc_folder := ${_gcc_folder}"
 
 [[ -d gcc-build ]] && rm -rf gcc-build
 
-cd ${_gcc_folder} && date --rfc-3339=seconds > ../gcc-prepare.log && \
-_patch_gcc | tee ../gcc-prepare.log && \
-date --rfc-3339=seconds >> ../gcc-prepare.log && cd .. && \
+_prepare_gcc 2>&1 | tee gcc-prepare.log && \
 mkdir -p gcc-build && cd gcc-build && \
-date --rfc-3339=seconds > ../gcc-build.log && \
-../${_gcc_folder}/configure --prefix="$INSTALL_PATH" \
-  --with-stage1-ldflags="-L$INSTALL_PATH/lib/" \
-  --libexecdir=${INSTALL_PATH}/lib \
-  --with-build-time-tools="$INSTALL_PATH/bin" \
-  --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
-  --with-gmp="$INSTALL_PATH" --with-mpfr="$INSTALL_PATH" --with-mpc="$INSTALL_PATH" \
-  --with-dwarf2 --disable-sjlj-exceptions \
-  --enable-languages=c,c++,ada \
-  --enable-static --enable-shared \
-  --enable-version-specific-runtime-libs \
-  --disable-libvtv --disable-win32-registry \
-  --disable-nls --disable-werror --disable-build-format-warnings 2>&1 | tee ../gcc-build.log && \
-make 2>&1 | tee ../gcc-build.log && \
-date --rfc-3339=seconds >> ../gcc-build.log && \
+_build_gcc 2>&1 | tee ../gcc-build.log && \
 make install && \
-make check -k
+make check
 
 
+
+
+# --with-gmp="$INSTALL_PATH"
+# --with-mpfr="$INSTALL_PATH" 
+# --with-mpc="$INSTALL_PATH"
 # --with-build-sysroot="$INSTALL_PATH"
+# --with-libiconv-prefix="$INSTALL_PATH" 
+# --with-libintl-prefix="$INSTALL_PATH"
+# --with-stage1-ldflags="-L$INSTALL_PATH/lib/"
+# --with-build-time-tools="$INSTALL_PATH/bin"
+# --libexecdir=${INSTALL_PATH}/lib
