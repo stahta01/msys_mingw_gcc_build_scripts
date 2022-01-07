@@ -38,12 +38,17 @@ date --rfc-3339=seconds > ../binutils-build.log && \
 ../${_binutils_folder}/configure --prefix="$INSTALL_PATH" \
   --with-build-sysroot="$INSTALL_PATH" \
   --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
-  --disable-rpath --enable-lto --enable-gold \
-  --enable-libssp --enable-install-libbfd \
+  --disable-rpath \
+  --enable-install-libbfd \
   --enable-shared --enable-static \
   --enable-install-libiberty \
   --enable-nls --disable-werror 2>&1 | tee ../binutils-build.log && \
 make 2>&1 | tee ../binutils-build.log && \
 date --rfc-3339=seconds >> ../binutils-build.log && \
 make install && \
-make check -k
+date --rfc-3339=seconds > ../binutils-check.log && \
+make check -k 2>&1 | tee ../binutils-check.log && \
+date --rfc-3339=seconds >> ../binutils-check.log
+
+# --enable-lto --enable-gold
+# --enable-libssp
