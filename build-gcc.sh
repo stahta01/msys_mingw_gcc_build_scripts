@@ -59,7 +59,7 @@ _build_gcc() {
     --prefix="$INSTALL_PATH" \
     --with-dwarf2 --disable-sjlj-exceptions \
     --enable-languages=c,c++ \
-    --enable-static --enable-shared \
+    --enable-static --disable-shared --disable-lto \
     --enable-version-specific-runtime-libs \
     --disable-libvtv --disable-win32-registry \
     --disable-nls --disable-werror --disable-build-format-warnings && \
