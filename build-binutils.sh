@@ -28,7 +28,7 @@ _prepare_binutils() {
   cd ..
 }
 
-_build_binutils() {
+_build_boot_binutils() {
   date --rfc-3339=seconds && \
   ../${_binutils_folder}/configure --build=i686-pc-mingw32 \
     --prefix="$INSTALL_PATH" \
@@ -54,7 +54,7 @@ _binutils_folder="binutils-2.36.1"
 
 _prepare_binutils 2>&1 | tee binutils-prepare.log && \
 mkdir -p binutils-build && cd binutils-build && \
-_build_binutils 2>&1 | tee ../binutils-build.log && \
+_build_boot_binutils 2>&1 | tee ../binutils-boot-build.log && \
 make install && \
 date --rfc-3339=seconds > ../binutils-check.log && \
 make LDFLAGS="" check 2>&1 | tee ../binutils-check.log || true && \
