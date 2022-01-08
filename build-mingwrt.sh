@@ -6,7 +6,7 @@ fi
 
 mkdir -p "$INSTALL_PATH" && \
 mkdir -p  mingwrt-build && cd  mingwrt-build && \
-../mingwrt-5.4.2/configure --prefix="$INSTALL_PATH" && \
+../mingwrt-5.4.2/configure --target=i686-pc-mingw32 --prefix="$INSTALL_PATH" && \
 make && \
 make install && \
 make check -k
