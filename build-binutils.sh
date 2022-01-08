@@ -33,7 +33,6 @@ _build_binutils() {
   ../${_binutils_folder}/configure --build=i686-pc-mingw32 \
     --prefix="$INSTALL_PATH" \
     --with-build-sysroot="$INSTALL_PATH" \
-    --with-libiconv-prefix="$INSTALL_PATH" --with-libintl-prefix="$INSTALL_PATH" \
     --disable-rpath \
     --enable-install-libbfd \
     --disable-shared --enable-static \
@@ -61,5 +60,7 @@ date --rfc-3339=seconds > ../binutils-check.log && \
 make LDFLAGS="" check 2>&1 | tee ../binutils-check.log || true && \
 date --rfc-3339=seconds >> ../binutils-check.log
 
+# --with-libiconv-prefix="$INSTALL_PATH"
+# --with-libintl-prefix="$INSTALL_PATH"
 # --enable-lto --enable-gold
 # --enable-libssp
