@@ -52,15 +52,17 @@ _prepare_gcc() {
   cd ..
 }
 
-_build_gcc() {
+_build_boot_gcc() {
   date --rfc-3339=seconds && \
   touch -a "$INSTALL_PATH"/include/features.h && \
   ../${_gcc_folder}/configure --build=i686-pc-mingw32 \
     --prefix="$INSTALL_PATH" \
     --with-dwarf2 --disable-sjlj-exceptions \
+    --disable-bootstrap \
     --enable-languages=c,c++ \
     --enable-static --enable-shared --disable-lto \
     --enable-version-specific-runtime-libs \
+    --enable-checking=release \
     --disable-libvtv --disable-win32-registry \
     --disable-nls --disable-werror --disable-build-format-warnings && \
   make && \
@@ -82,7 +84,7 @@ echo "_gcc_folder := ${_gcc_folder}"
 _prepare_gcc 2>&1 | tee gcc-prepare.log && \
 mkdir -p gcc-build && cd gcc-build && \
 mkdir -p /mingw/include && \
-_build_gcc 2>&1 | tee ../gcc-build.log && \
+_build_boot_gcc 2>&1 | tee ../gcc-build.log && \
 make install && \
 make check
 
