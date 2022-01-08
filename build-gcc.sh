@@ -54,6 +54,7 @@ _prepare_gcc() {
 
 _build_gcc() {
   date --rfc-3339=seconds && \
+  touch -a "$INSTALL_PATH"/include/features.h && \
   ../${_gcc_folder}/configure --build=i686-pc-mingw32 \
     --prefix="$INSTALL_PATH" \
     --with-dwarf2 --disable-sjlj-exceptions \
