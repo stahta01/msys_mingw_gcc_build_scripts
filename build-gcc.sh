@@ -55,7 +55,7 @@ _prepare_gcc() {
 _build_boot_gcc() {
   date --rfc-3339=seconds && \
   touch -a "$INSTALL_PATH"/include/features.h && \
-  ../${_gcc_folder}/configure --build=i686-pc-mingw32 \
+  ../${_gcc_folder}/configure --build=mingw32 \
     --prefix="$INSTALL_PATH" \
     --with-dwarf2 --disable-sjlj-exceptions \
     --disable-bootstrap \
@@ -84,7 +84,7 @@ echo "_gcc_folder := ${_gcc_folder}"
 _prepare_gcc 2>&1 | tee gcc-prepare.log && \
 mkdir -p gcc-build && cd gcc-build && \
 mkdir -p /mingw/include && \
-_build_boot_gcc 2>&1 | tee ../gcc-build.log && \
+_build_boot_gcc 2>&1 | tee ../gcc-boot-build.log && \
 make install && \
 make check
 
