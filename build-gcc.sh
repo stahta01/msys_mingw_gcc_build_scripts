@@ -63,6 +63,7 @@ _build_boot_gcc() {
     --enable-static --enable-shared --disable-lto \
     --enable-version-specific-runtime-libs \
     --enable-checking=release \
+    --enable-cxx-flags='-fno-function-sections -fno-data-sections' \
     --disable-libvtv --disable-win32-registry \
     --disable-nls --disable-werror --disable-build-format-warnings && \
   make && \
@@ -100,3 +101,4 @@ make check
 # --with-stage1-ldflags="-L$INSTALL_PATH/lib/"
 # --with-build-time-tools="$INSTALL_PATH/bin"
 # --libexecdir=${INSTALL_PATH}/lib
+# --enable-cxx-flags='-fno-function-sections -fno-data-sections'
