@@ -1,2 +1,3 @@
+Manual extract of mingwrt-5.4.2-mingw32-dev.* and w32api-5.4.2-mingw32-dev.*
 Manual copy of header features.h to include folder
 Manual copy of libintl-8.dll to bin folder
