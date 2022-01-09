@@ -88,8 +88,9 @@ _prepare_gcc 2>&1 | tee gcc-prepare.log && \
 mkdir -p gcc-build && cd gcc-build && \
 mkdir -p /mingw/include && \
 _build_boot_gcc 2>&1 | tee ../gcc-boot-build.log && \
+_build_boot_gcc && \
 make install && \
-make check
+make check 2>&1 | tee ../gcc-check.log
 
 
 # --with-gmp="$INSTALL_PATH"
