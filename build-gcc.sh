@@ -57,6 +57,7 @@ _build_boot_gcc() {
   touch -a "$INSTALL_PATH"/include/features.h && \
   ../${_gcc_folder}/configure --build=mingw32 \
     --prefix="$INSTALL_PATH" \
+    --with-gnu-ld \
     --with-dwarf2 --disable-sjlj-exceptions \
     --disable-bootstrap \
     --enable-languages=c,c++ \
@@ -64,7 +65,8 @@ _build_boot_gcc() {
     --enable-version-specific-runtime-libs \
     --enable-checking=release \
     --enable-cxx-flags='-fno-function-sections -fno-data-sections' \
-    --disable-libvtv --disable-win32-registry \
+    --disable-multilib \
+    --disable-libvtv --disable-win32-registry --disable-symvers \
     --disable-nls --disable-werror --disable-build-format-warnings && \
   make && \
   date --rfc-3339=seconds
@@ -88,8 +90,6 @@ mkdir -p /mingw/include && \
 _build_boot_gcc 2>&1 | tee ../gcc-boot-build.log && \
 make install && \
 make check
-
-
 
 
 # --with-gmp="$INSTALL_PATH"
